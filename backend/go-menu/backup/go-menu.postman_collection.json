@@ -1,0 +1,472 @@
+{
+	"info": {
+		"_postman_id": "b5e2e3c0-5f1d-4e1f-8c1d-3b9b2c1b8e4a",
+		"name": "Go Menu API",
+		"description": "Restaurant Menu Management API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Login Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData.token) {",
+									"    pm.environment.set(\"admin_token\", jsonData.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/admin/login",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "login"]
+						},
+						"description": "Login as admin and get JWT token"
+					}
+				},
+				{
+					"name": "Get All Menu",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8000/admin/menu",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "menu"]
+						},
+						"description": "Get all menu items"
+					}
+				},
+				{
+					"name": "Get Menu by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8000/admin/menu/id/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "menu", "id", "1"]
+						},
+						"description": "Get menu item by ID"
+					}
+				},
+				{
+					"name": "Get Menu by Name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8000/admin/menu/name/Nasi Goreng",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "menu", "name", "Nasi Goreng"]
+						},
+						"description": "Get menu item by name"
+					}
+				},
+				{
+					"name": "Add Menu Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Nasi Goreng Special\",\n    \"image_url\": \"https://example.com/nasi-goreng.jpg\",\n    \"type\": \"Main Course\",\n    \"price\": 35000,\n    \"available\": true\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/admin/menu",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "menu"]
+						},
+						"description": "Add a new menu item"
+					}
+				},
+				{
+					"name": "Update Menu by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Nasi Goreng Special Updated\",\n    \"image_url\": \"https://example.com/nasi-goreng.jpg\",\n    \"type\": \"Main Course\",\n    \"price\": 40000,\n    \"available\": true\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/admin/menu/id/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "menu", "id", "1"]
+						},
+						"description": "Update menu item by ID"
+					}
+				},
+				{
+					"name": "Update Menu by Name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Nasi Goreng Special Updated\",\n    \"image_url\": \"https://example.com/nasi-goreng.jpg\",\n    \"type\": \"Main Course\",\n    \"price\": 40000,\n    \"available\": true\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/admin/menu/name/Nasi Goreng Special",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "menu", "name", "Nasi Goreng Special"]
+						},
+						"description": "Update menu item by name"
+					}
+				},
+				{
+					"name": "Delete Menu by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"url": {
+							"raw": "http://localhost:8000/admin/menu/id/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "menu", "id", "1"]
+						},
+						"description": "Delete menu item by ID"
+					}
+				},
+				{
+					"name": "Delete Menu by Name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"url": {
+							"raw": "http://localhost:8000/admin/menu/name/Nasi Goreng Special",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "menu", "name", "Nasi Goreng Special"]
+						},
+						"description": "Delete menu item by name"
+					}
+				},
+				{
+					"name": "Get All Orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8000/admin/orders",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "orders"]
+						},
+						"description": "Get all orders with user and item details"
+					}
+				},
+				{
+					"name": "Get Order by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8000/admin/orders/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "orders", "1"]
+						},
+						"description": "Get specific order by ID with user and item details"
+					}
+				},
+				{
+					"name": "Update Order Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"processing\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/admin/orders/1/status",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "orders", "1", "status"]
+						},
+						"description": "Update order status (pending/processing/completed/cancelled)"
+					}
+				},
+				{
+					"name": "Update Payment Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payment_status\": \"paid\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/admin/orders/1/payment",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["admin", "orders", "1", "payment"]
+						},
+						"description": "Update payment status (unpaid/paid/refunded)"
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"table_number\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/users",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["users"]
+						},
+						"description": "Register a new user"
+					}
+				},
+				{
+					"name": "View Menu",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8000/users/menu",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["users", "menu"]
+						},
+						"description": "View available menu items"
+					}
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 1,\n    \"menu_items\": [\n        {\n            \"menu_id\": 1,\n            \"quantity\": 2\n        },\n        {\n            \"menu_id\": 3,\n            \"quantity\": 1\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/users/orders",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["users", "orders"]
+						},
+						"description": "Create a new order with multiple items"
+					}
+				},
+				{
+					"name": "Get User Orders",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:8000/users/orders/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8000",
+							"path": ["users", "orders", "1"]
+						},
+						"description": "Get all orders for a specific user"
+					}
+				}
+			]
+		}
+	]
+} 
